@@ -23,7 +23,7 @@ namespace AdventureGame
                       
             playerName = Console.ReadLine().ToString();
 
-            Console.WriteLine("Your chosen name is " + playerName);
+            Console.WriteLine(" Your chosen name is " + playerName);
             Console.ReadKey();
             return playerName;
         }
@@ -44,14 +44,14 @@ namespace AdventureGame
             switch (chosenWeapon)
             {
                 case "1":
-                    equippedWeapon = "Plasma blade, throbbing with energy";
+                    equippedWeapon = " Plasma blade, throbbing with energy";
                     // Lifeform.damage = Generator.Roll(6);
-                    Console.WriteLine(String.Format("You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
+                    Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
                     break;
                 case "2":
-                    equippedWeapon = "Blaster, fully charged";
+                    equippedWeapon = " Blaster, fully charged";
                     //Lifeform.damage = Generator.Roll(8);
-                    Console.WriteLine(String.Format ("You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
+                    Console.WriteLine(String.Format (" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
                     break;
             // TODO number 3 
             // handle case when no option is picked as using fists
@@ -76,12 +76,23 @@ namespace AdventureGame
                 }
                 else
                 {
-                    Console.WriteLine("The " + defender.name + " died.");
+                    Console.WriteLine(" The " + defender.name + " died.");
                 }
             }
 
-            Console.WriteLine("The corridor is silent.");
+            Console.WriteLine(" The corridor is silent.");
         }
 
+        public static void OfferAgency()
+        {
+            Console.WriteLine("\n Time passes.\n .\n ..\n ...\nOk, what would you like to do now?");
+            // time delay here
+            Console.WriteLine(" Huh?\n1. What can I do?");
+
+
+            string choice = Console.ReadKey().ToString();
+
+            // backpack, wristwatch (broken), comlog, hide
+        }
     }
 }

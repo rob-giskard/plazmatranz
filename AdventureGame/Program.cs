@@ -17,7 +17,7 @@ namespace AdventureGame
         
             if (!player.DoEngage())
             {
-                Console.WriteLine("Time passes.");                 
+                Game.OfferAgency();                           
             }
             else
             {
