@@ -9,6 +9,8 @@ namespace AdventureGame
             Game.StartGame();
 
             Lifeform player = new();
+            Item backpack = new() {name = "Backpack" };
+            backpack.stuffInside.Add("Personal statblock");
            
             player.name = Game.NameCharacter();
             player.equippedWeapon = Game.PickWeapon();
@@ -17,7 +19,7 @@ namespace AdventureGame
         
             if (!player.DoEngage())
             {
-                Game.OfferAgency();                           
+                Game.OfferAgency(player, backpack);                           
             }
             else
             {
@@ -26,7 +28,10 @@ namespace AdventureGame
                 creature1.ShowHP();
             }
 
-            
+            /*
+             * 
+             * class for a room - args all sides def as "wall", loot, enemy all def to 0; spawn rooms next to each othr by erasing walls, make functions to travel on grid, lifeform has a field for room IDs
+             * */
 
         }
     }

@@ -8,7 +8,7 @@ namespace AdventureGame
         public static int Roll(int sidesNo)
         {
             Random random = new();
-            return random.Next(sidesNo + 1);
+            return random.Next(sidesNo);
         }
 
         public static string PickEnemy()
@@ -16,13 +16,20 @@ namespace AdventureGame
         //TODO separate enemies by difficulty, first roll for that
         {
             String[] bestiary = { "hulkbat", "crazed surgeon", "infected guard", "shambling cadaver", "nightmare nurse", "screamrat" };
-            int pick = Roll(bestiary.Length - 1);
+            int pick = Roll(bestiary.Length);
             string currEnemy = bestiary.GetValue(pick).ToString();
 
             Console.WriteLine(String.Format("In the flickering light before you, a skulking {0} starts moving.", currEnemy));
             Console.ReadKey();
 
             return currEnemy;
+        }
+
+        public static string NegativeAnswer()
+        {
+            String[] negAnswers = { " No", " Nope", " Not possible", " Invalid", " Wrong", " Try again", " Negative" };
+            int pick = Roll(negAnswers.Length);
+            return negAnswers.GetValue(pick).ToString();
         }
     }
 }

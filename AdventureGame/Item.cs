@@ -14,7 +14,7 @@ namespace AdventureGame
 			container.stuffInside.Add(item.name);
 		}
 
-		public static void showContents(Item container)
+		public static void ShowContents(Item container)
 		{
 			Console.WriteLine("\n{0} contains the following:\n", container.name);
 

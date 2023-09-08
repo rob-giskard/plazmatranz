@@ -12,6 +12,7 @@ namespace AdventureGame
         public string equippedWeapon;
         public int damage = 5;
 
+
         public void ShowHP()
         {
             Console.WriteLine("Name: " + name + 
@@ -26,7 +27,7 @@ namespace AdventureGame
 
             if (toHit > opponent.AC)
             {
-                Console.WriteLine("    *HIT!*\nDamage dealt: " + damage);
+                Console.WriteLine("    *HIT!*\nDamage dealt: " + damage + " to " + opponent.name);
                 opponent.currHP -= damage;
                 return opponent.currHP;
             }
@@ -50,7 +51,7 @@ namespace AdventureGame
             }
             else
             {
-                Console.WriteLine("You wait and see what happens.");
+                Console.WriteLine(" You wait and see what happens.");
                 return false;                     
             }
             
