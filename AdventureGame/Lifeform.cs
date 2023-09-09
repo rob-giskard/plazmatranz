@@ -11,7 +11,9 @@ namespace AdventureGame
         public static int toHitBonus = 3; 
         public string equippedWeapon;
         public int damage = 5;
-
+        public int exp = 0;
+        public Item inventory;
+        public bool isHidden = false;
 
         public void ShowHP()
         {
