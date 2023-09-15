@@ -14,6 +14,7 @@ namespace AdventureGame
         public int exp = 0;
         public Item inventory;
         public bool isHidden = false;
+        public int encountersDone = 0;
 
         public void ShowHP()
         {

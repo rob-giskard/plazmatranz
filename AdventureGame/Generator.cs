@@ -15,7 +15,7 @@ namespace AdventureGame
         //pool of enemies, choose at random for now
         //TODO separate enemies by difficulty, first roll for that
         {
-            String[] bestiary = { "hulkbat", "crazed surgeon", "infected guard", "shambling cadaver", "nightmare nurse", "screamrat" };
+            String[] bestiary = { "hulkbat", "crazed surgeon", "infected guard", "shambling cadaver", "nightmare nurse", "screamrat", "shriekdog", "horror spider" };
             int pick = Roll(bestiary.Length);
             string currEnemy = bestiary.GetValue(pick).ToString();
 
@@ -27,7 +27,7 @@ namespace AdventureGame
 
         public static string NegativeAnswer()
         {
-            String[] negAnswers = { " No", " Nope", " Not possible", " Invalid", " Wrong", " Try again", " Negative" };
+            String[] negAnswers = { " No", " Nope", " Not possible", " Invalid", " Wrong", " Try again", " Negative", "Does not compute", "Nada", "I don't understand" };
             int pick = Roll(negAnswers.Length);
             return negAnswers.GetValue(pick).ToString();
         }
