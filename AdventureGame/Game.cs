@@ -17,7 +17,8 @@ namespace AdventureGame
 
         public static void EndGame(Lifeform forWhom)
         {
-            Console.WriteLine(" \nGame is over, you achieved this:\n NAME: {0}\n GEAR: {1}\n DAMAGE BONUS: {2}\n EXP: {3}\n", forWhom.name, forWhom.equippedWeapon, forWhom.damage, forWhom.exp);
+            Console.WriteLine(" \nGame is over, you achieved this:\n NAME: {0}\n GEAR: {1}\n DAMAGE BONUS: {2}\n EXP: {3}\n HIDE ATTEMPTS: {4}\n", forWhom.name, forWhom.equippedWeapon, forWhom.damage, forWhom.exp, forWhom.hideCounter);
+            Item.ShowContents(forWhom.inventory);
             Console.ReadKey();
         }
         public static string NameCharacter()
@@ -54,21 +55,21 @@ namespace AdventureGame
                 switch (chosenWeapon)
                 {
                     case "1":
-                        equippedWeapon = " Plasma blade, throbbing with energy";
+                        equippedWeapon = "Plasma blade, throbbing with energy";
                         attackRange = "Close";
                         // Lifeform.damage = Generator.Roll(6);
                         Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
                         choiceMadeInv = true;
                         break;
                     case "2":
-                        equippedWeapon = " Blaster, fully charged";
+                        equippedWeapon = "Blaster, fully charged";
                         attackRange = "Long";
                         //Lifeform.damage = Generator.Roll(8);
                         Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
                         choiceMadeInv = true;
                         break;
                     case "3":
-                        equippedWeapon = " Psi-console, seeing into minds of others";
+                        equippedWeapon = "Psi-console, seeing into minds of others";
                         attackRange = "Moderate";
                         //Lifeform.damage = Generator.Roll(8);
                         Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
@@ -142,6 +143,7 @@ namespace AdventureGame
                         Console.WriteLine(" \nYou hold your breath and try to avoid detection.\n");
                         choiceMade = true;
                         player.isHidden = true;
+                        player.hideCounter += 1;
                         // Console.ReadKey();
                         break;
                     case ("2"):

@@ -19,17 +19,24 @@ namespace AdventureGame
             int pick = Roll(bestiary.Length);
             string currEnemy = bestiary.GetValue(pick).ToString();
 
-            Console.WriteLine(String.Format("In the flickering light before you, a skulking {0} starts moving.", currEnemy));
-            Console.ReadKey();
+            //Console.WriteLine(String.Format(" \n\n ****\nIn the flickering light before you, a skulking {0} starts moving.\n****\n", currEnemy));
+            //Console.ReadKey();
 
             return currEnemy;
         }
 
         public static string NegativeAnswer()
         {
-            String[] negAnswers = { " No", " Nope", " Not possible", " Invalid", " Wrong", " Try again", " Negative", "Does not compute", "Nada", "I don't understand" };
+            String[] negAnswers = { "No", "     Nope", " Not possible", "   Invalid", "    Wrong", "  Try again", " Negative", "        Does not compute", " Nada", "   I don't understand" };
             int pick = Roll(negAnswers.Length);
             return negAnswers.GetValue(pick).ToString();
+        }
+
+        public static string PickLoot()
+        {
+            String[] lootables = { " Gold coin", " Piece of jerky", " Marble", " Rope", " Candle", " Shovel", " Nail", " Ligament", " Plazma powder", "Metal thingy" };
+            int pick = Roll(lootables.Length);
+            return lootables.GetValue(pick).ToString();
         }
     }
 }

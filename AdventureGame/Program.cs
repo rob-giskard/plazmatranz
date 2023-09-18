@@ -15,7 +15,7 @@ namespace AdventureGame
             Lifeform[] enemyRoster = new Lifeform[]
             {
             new Lifeform() { name = Generator.PickEnemy(), AC = 3, maxHP = 10, currHP = 10, damage = 2, equippedWeapon = "Putrid claws" },
-            new Lifeform() { name = Generator.PickEnemy(), AC = 2, maxHP = 20, currHP = 20, damage = 1, equippedWeapon = "You do not notice any" },
+            new Lifeform() { name = Generator.PickEnemy(), AC = 2, maxHP = 20, currHP = 20, damage = 1, equippedWeapon = "Plazma saber" },
             new Lifeform() { name = Generator.PickEnemy(), AC = 5, maxHP = 7, currHP = 7, damage = 3, equippedWeapon = "Rusty kukri" }
             };
 
@@ -28,12 +28,17 @@ namespace AdventureGame
             while (player.encountersDone < 3)
             {
                 Lifeform creature1 = enemyRoster[Generator.Roll(enemyRoster.Length)];
+
+                Console.WriteLine(String.Format(" \n\n ****\nIn the flickering light before you, a skulking {0} starts moving.\n ****\n", creature1.name));
+                Console.ReadKey();
+
                 if (!player.DoEngage())
                 {
                     Game.OfferAgency(player, backpack);
+                    // player hides
                     if (!player.isHidden)
                     {
-                        Console.WriteLine(" \nThe enemy closes the distance and engages you.\n");
+                        Console.WriteLine(" \nThe enemy closes the distance and engages you. Your stealth failed.\n");
                         Game.ResolveRound(player, creature1, true);
                         player.ShowHP();
                         creature1.ShowHP();
