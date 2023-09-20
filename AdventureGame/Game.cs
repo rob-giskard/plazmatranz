@@ -35,12 +35,12 @@ namespace AdventureGame
             return playerName;
         }
 
-        public static string PickWeapon()
+        public static (string weapon, string range) PickWeapon()
         {
             String chosenWeapon;
             String equippedWeapon = "Fists";
             bool choiceMadeInv = false;
-            string attackRange;
+            string attackRange = "Very close";
 
             Console.Title = "Equipment hub";
             Console.WriteLine("Choose from the available weapons:" +
@@ -82,7 +82,7 @@ namespace AdventureGame
             }
             
             Console.ReadKey();
-            return equippedWeapon; // attackRange;
+            return (equippedWeapon, attackRange); // attackRange;
                                    // make this return a tuple
         }
 
@@ -126,7 +126,7 @@ namespace AdventureGame
 
         public static void OfferAgency(Lifeform player, Item inventory)
         {
-            Console.WriteLine("\n Time passes.\n .\n ..\n ...\n Ok, what would you like to do now?\n\n1. Hide\n2. Check backpack\n3. Check wristwatch\n");
+            Console.WriteLine("\n Time passes.\n\n .\n\n  ..\n\n   ...\n\n Ok, what would you like to do now?\n\n1. Hide\n2. Check backpack\n3. Check wristwatch\n");
             // time delay here
             // Console.WriteLine(" Huh?\n1. What can I do?");
 

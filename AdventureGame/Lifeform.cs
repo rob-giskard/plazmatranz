@@ -16,6 +16,7 @@ namespace AdventureGame
         public bool isHidden = false;
         public int encountersDone = 0;
         public int hideCounter = 0;
+        public string attackRange = "Very close";
 
         public void ShowHP()
         {
