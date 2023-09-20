@@ -17,7 +17,8 @@ namespace AdventureGame
 
         public static void EndGame(Lifeform forWhom)
         {
-            Console.WriteLine(" \nGame is over, you achieved this:\n NAME: {0}\n GEAR: {1}\n DAMAGE BONUS: {2}\n EXP: {3}\n", forWhom.name, forWhom.equippedWeapon, forWhom.damage, forWhom.exp);
+            Console.WriteLine(" \nGame is over, you achieved this:\n NAME: {0}\n GEAR: {1}\n DAMAGE BONUS: {2}\n EXP: {3}\n HIDE ATTEMPTS: {4}\n", forWhom.name, forWhom.equippedWeapon, forWhom.damage, forWhom.exp, forWhom.hideCounter);
+            Item.ShowContents(forWhom.inventory);
             Console.ReadKey();
         }
         public static string NameCharacter()
@@ -34,12 +35,12 @@ namespace AdventureGame
             return playerName;
         }
 
-        public static string PickWeapon()
+        public static (string weapon, string range) PickWeapon()
         {
             String chosenWeapon;
             String equippedWeapon = "Fists";
             bool choiceMadeInv = false;
-            string attackRange;
+            string attackRange = "Very close";
 
             Console.Title = "Equipment hub";
             Console.WriteLine("Choose from the available weapons:" +
@@ -54,21 +55,21 @@ namespace AdventureGame
                 switch (chosenWeapon)
                 {
                     case "1":
-                        equippedWeapon = " Plasma blade, throbbing with energy";
+                        equippedWeapon = "Plasma blade, throbbing with energy";
                         attackRange = "Close";
                         // Lifeform.damage = Generator.Roll(6);
                         Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
                         choiceMadeInv = true;
                         break;
                     case "2":
-                        equippedWeapon = " Blaster, fully charged";
+                        equippedWeapon = "Blaster, fully charged";
                         attackRange = "Long";
                         //Lifeform.damage = Generator.Roll(8);
                         Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
                         choiceMadeInv = true;
                         break;
                     case "3":
-                        equippedWeapon = " Psi-console, seeing into minds of others";
+                        equippedWeapon = "Psi-console, seeing into minds of others";
                         attackRange = "Moderate";
                         //Lifeform.damage = Generator.Roll(8);
                         Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
@@ -81,12 +82,19 @@ namespace AdventureGame
             }
             
             Console.ReadKey();
-            return equippedWeapon; // attackRange;
+            return (equippedWeapon, attackRange); // attackRange;
                                    // make this return a tuple
         }
 
-        public static void ResolveRound(Lifeform attacker, Lifeform defender)
+        public static void ResolveRound(Lifeform attacker, Lifeform defender, bool attackerSurprised)
         {
+            if (attackerSurprised)
+            {
+                Console.WriteLine(" \nThe {0} attacks first.\n", defender.name);
+                attacker.currHP = defender.ResolveTurnVs(attacker);
+                Console.WriteLine(" \nOOPS\n");
+                Console.ReadKey();
+            }
             while (attacker.currHP >= 0 && defender.currHP >= 0)
             {
                 Console.Title = "Combat";
@@ -102,13 +110,13 @@ namespace AdventureGame
                     Console.ReadKey();
                     if (attacker.currHP <= 0)
                     {
-                        Console.WriteLine(attacker.name + " , you died. Try again or go and do something useful.");
+                        Console.WriteLine("\n{0}, you died. Try again or go and do something useful.", attacker.name);
                         Game.EndGame(attacker);
                     }
                 }
                 else
                 {
-                    Console.WriteLine(" The " + defender.name + " died.");
+                    Console.WriteLine(" The {0} died.", defender.name);
                     
                 }
             }
@@ -116,9 +124,9 @@ namespace AdventureGame
             Console.WriteLine(" The corridor is silent.");
         }
 
-        public static void OfferAgency(Lifeform lifeform, Item inventory)
+        public static void OfferAgency(Lifeform player, Item inventory)
         {
-            Console.WriteLine("\n Time passes.\n .\n ..\n ...\n Ok, what would you like to do now?\n\n1. Hide\n2. Check backpack\n3. Check wristwatch\n");
+            Console.WriteLine("\n Time passes.\n\n .\n\n  ..\n\n   ...\n\n Ok, what would you like to do now?\n\n1. Hide\n2. Check backpack\n3. Check wristwatch\n");
             // time delay here
             // Console.WriteLine(" Huh?\n1. What can I do?");
 
@@ -132,20 +140,21 @@ namespace AdventureGame
                 switch (choice)
                 {
                     case ("1"):
-                        Console.WriteLine(" You hold your breath and try to avoid detection.");
+                        Console.WriteLine(" \nYou hold your breath and try to avoid detection.\n");
                         choiceMade = true;
-                        lifeform.isHidden = true;
-                        Console.ReadKey();
+                        player.isHidden = true;
+                        player.hideCounter += 1;
+                        // Console.ReadKey();
                         break;
                     case ("2"):
                         Item.ShowContents(inventory);
                         choiceMade = true;
-                        Console.ReadKey();
+                        // Console.ReadKey();
                         break;
                     case ("3"):
-                        lifeform.ShowHP();
+                        player.ShowHP();
                         choiceMade = true;
-                        Console.ReadKey();
+                        // Console.ReadKey();
                         break;
                     default:
                         Console.WriteLine(Generator.NegativeAnswer());
@@ -163,6 +172,21 @@ namespace AdventureGame
             toContainer.stuffInside.Add(loot);
             Console.WriteLine(" \n{0} was added to your backpack.\n", loot);
 
+            Console.ReadKey();
+        }
+
+        public static void AfterActionReview(Lifeform player, Lifeform enemy)
+        {
+            if (player.isHidden)
+            {
+                Console.WriteLine(" \nThe {0} passes you obliviously. Luck is at your side.\n\nYou leave your hiding place and continue down the corridor.\n", enemy.name);
+            }
+            else
+            {
+                Console.WriteLine(" \nYou leave the {0}'s remains behind and continue down the corridor. Prepare for another encounter.\n", enemy.name);
+                player.isHidden = false; 
+            }
+            player.encountersDone += 1; 
             Console.ReadKey();
         }
     }

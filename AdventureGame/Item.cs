@@ -29,6 +29,8 @@ namespace AdventureGame
             {
 				Console.WriteLine("\n Dis' empty, dawg...\n");
             }
+
+			Console.ReadKey();
 		}
 	}
 }

@@ -11,28 +11,60 @@ namespace AdventureGame
             Item backpack = new() { name = "Backpack" };
             backpack.stuffInside.Add("Personal statblock");
             Lifeform player = new() { inventory = backpack };
-            
-            
+
+            Lifeform[] enemyRoster = new Lifeform[]
+            {
+            new Lifeform() { name = Generator.PickEnemy(), AC = 3, maxHP = 10, currHP = 10, damage = 2, equippedWeapon = "Putrid claws" },
+            new Lifeform() { name = Generator.PickEnemy(), AC = 2, maxHP = 20, currHP = 20, damage = 1, equippedWeapon = "Plazma saber" },
+            new Lifeform() { name = Generator.PickEnemy(), AC = 5, maxHP = 7, currHP = 7, damage = 3, equippedWeapon = "Rusty kukri" },
+            new Lifeform() { name = Generator.PickEnemy(), AC = 5, maxHP = 7, currHP = 7, damage = 3, equippedWeapon = "Psi-link" },
+            new Lifeform() { name = Generator.PickEnemy(), AC = 5, maxHP = 7, currHP = 7, damage = 3, equippedWeapon = "Omniknife" }
+            };
+
+            foreach (Lifeform enemy in enemyRoster)
+                {
+                Console.WriteLine(enemy.name);
+                }
+                        
             player.name = Game.NameCharacter();
-            player.equippedWeapon = Game.PickWeapon();
-            // player.equippedWeapon, player.attackRange = Game.PickWeapon();
-
-            Lifeform creature1 = new() { name = Generator.PickEnemy(), AC = 2, maxHP = 20, currHP = 20, damage = 1, equippedWeapon = "You do not notice any" };
-        
-            if (!player.DoEngage())
+            (player.equippedWeapon, player.attackRange) = Game.PickWeapon();
+         
+            while (player.encountersDone < 3)
             {
-                Game.OfferAgency(player, backpack);  
-            }
-            else
-            {
-                Game.ResolveRound(player, creature1);
-                player.ShowHP();
-                creature1.ShowHP();
+                //Lifeform creature1 = enemyRoster[Generator.Roll(enemyRoster.Length)];
+                Lifeform creature1 = new Lifeform() { name = Generator.PickEnemy(0), AC = 3, maxHP = 10, currHP = 10, damage = 2, equippedWeapon = "Putrid claws" };
 
-                Game.GiveLoot(backpack, "A gold coin");
-            }
+                Console.WriteLine(String.Format(" \n\n ****\nIn the flickering light before you, a skulking {0} starts moving.\n ****\n", creature1.name));
+                Console.ReadKey();
 
-            Game.OfferAgency(player, backpack);
+                if (!player.DoEngage())
+                {
+                    Game.OfferAgency(player, backpack);
+                    // player hides
+                    if (!player.isHidden)
+                    {
+                        Console.WriteLine(" \n ####\n You hesitated too long. The enemy closes the distance and engages you.\n ####\n");
+                        Game.ResolveRound(player, creature1, true);
+                        player.ShowHP();
+                        creature1.ShowHP();
+
+                        Game.GiveLoot(backpack, "A gold coin");
+                        player.exp += 1;
+                    }
+                }
+                else
+                {
+                    Game.ResolveRound(player, creature1, false);
+                    player.ShowHP();
+                    creature1.ShowHP();
+
+                    Game.GiveLoot(backpack, Generator.PickLoot());
+                    player.exp += 1;
+                }
+
+                // Game.OfferAgency(player, backpack);
+                Game.AfterActionReview(player, creature1);
+            }
 
             // player can wait hidden or advance from corridor - offerAgencyAloof
             // player can use items or attack
