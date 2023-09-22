@@ -12,6 +12,7 @@ namespace AdventureGame
             backpack.stuffInside.Add("Personal statblock");
             Lifeform player = new() { inventory = backpack };
 
+            /*
             Lifeform[] enemyRoster = new Lifeform[]
             {
             new Lifeform() { name = Generator.PickEnemy(), AC = 3, maxHP = 10, currHP = 10, damage = 2, equippedWeapon = "Putrid claws" },
@@ -25,11 +26,12 @@ namespace AdventureGame
                 {
                 Console.WriteLine(enemy.name);
                 }
-                        
+            */
+            
             player.name = Game.NameCharacter();
             (player.equippedWeapon, player.attackRange) = Game.PickWeapon();
-         
-            while (player.encountersDone < 3)
+
+            while (player.encountersDone < Game.StartLevel1())
             {
                 //Lifeform creature1 = enemyRoster[Generator.Roll(enemyRoster.Length)];
                 Lifeform creature1 = new Lifeform() { name = Generator.PickEnemy(0), AC = 3, maxHP = 10, currHP = 10, damage = 2, equippedWeapon = "Putrid claws" };

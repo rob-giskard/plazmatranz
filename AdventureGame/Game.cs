@@ -11,7 +11,7 @@ namespace AdventureGame
             Console.WriteLine("====#### Adventure Game ####====");
             Console.WriteLine("Revamped classic");
             Console.WriteLine("Very programming");
-            Console.WriteLine("Much wow");
+            Console.WriteLine("Much wow\n\n\n\n\n\n\n\n");
             Console.ReadKey();
         }
 
@@ -188,6 +188,29 @@ namespace AdventureGame
             }
             player.encountersDone += 1; 
             Console.ReadKey();
+        }
+
+        public static int StartLevel()
+        {
+            string len;
+
+            Console.WriteLine(" \nYou find yourself in a dank corridor.\n -> You can decide how many enemies you encounter. Type a number.");
+            
+            len = (Console.ReadLine());
+            int number;
+            bool success = int.TryParse(len, out number);
+
+            while (!numberSet)
+            {
+                if (success)
+                {
+                    Console.WriteLine($"You chose {number}. Good.");
+                }
+                else
+                {
+                    Console.WriteLine($"What is taht?!");
+                }
+            }
         }
     }
 }
