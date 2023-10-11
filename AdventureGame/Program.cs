@@ -27,14 +27,23 @@ namespace AdventureGame
                 Console.WriteLine(enemy.name);
                 }
             */
-            
+
             player.name = Game.NameCharacter();
             (player.equippedWeapon, player.attackRange) = Game.PickWeapon();
+            int firstLevelLength = Game.StartLevel;
 
-            while (player.encountersDone < Game.StartLevel1())
+            Room atrium = new Room() { name = "atrium" };
+            Room lab = new Room() { name = "Decrepit lab", row = 1, column = 2 };
+
+            player.EnterRoom(lab);
+            Console.WriteLine(lab.ShowRoomExits());
+            
+            Game.Reset();
+
+            while (player.encountersDone < firstLevelLength)
             {
                 //Lifeform creature1 = enemyRoster[Generator.Roll(enemyRoster.Length)];
-                Lifeform creature1 = new Lifeform() { name = Generator.PickEnemy(0), AC = 3, maxHP = 10, currHP = 10, damage = 2, equippedWeapon = "Putrid claws" };
+                Lifeform creature1 = new Lifeform() { name = Generator.PickEnemy(0), AC = 3, maxHP = 10, currHP = 10, damage = 2, equippedWeapon = Generator.PickEnemyWeapon() };
 
                 Console.WriteLine(String.Format(" \n\n ****\nIn the flickering light before you, a skulking {0} starts moving.\n ****\n", creature1.name));
                 Console.ReadKey();
@@ -50,7 +59,7 @@ namespace AdventureGame
                         player.ShowHP();
                         creature1.ShowHP();
 
-                        Game.GiveLoot(backpack, "A gold coin");
+                        Game.GiveLoot(backpack, Generator.PickLoot());
                         player.exp += 1;
                     }
                 }
@@ -68,10 +77,7 @@ namespace AdventureGame
                 Game.AfterActionReview(player, creature1);
             }
 
-            // player can wait hidden or advance from corridor - offerAgencyAloof
-            // player can use items or attack
-
-
+           
             Game.EndGame(player);
 
 

@@ -5,13 +5,13 @@ namespace AdventureGame
     //handle introduction and character creation 
     public class Game
     {
-        public static void StartGame() 
+        public static void StartGame()
         {
             Console.Title = "Welcome screen";
             Console.WriteLine("====#### Adventure Game ####====");
-            Console.WriteLine("Revamped classic");
-            Console.WriteLine("Very programming");
-            Console.WriteLine("Much wow\n\n\n\n\n\n\n\n");
+            Console.WriteLine("        Revamped classic");
+            Console.WriteLine("        Very programming");
+            Console.WriteLine("            Much wow\n\n\n\n\n\n\n\n Would you kindly press a key.");
             Console.ReadKey();
         }
 
@@ -27,7 +27,7 @@ namespace AdventureGame
 
             Console.Title = "Character creation";
             Console.WriteLine("Enter your name now.");
-                      
+
             playerName = Console.ReadLine().ToString();
 
             Console.WriteLine(" Your chosen name is " + playerName);
@@ -47,18 +47,18 @@ namespace AdventureGame
                 " 1. Plasma blade" +
                 " 2. Blaster" +
                 " 3. Psi-console");
-                        
+
             while (!choiceMadeInv)
             {
-                chosenWeapon = Console.ReadLine();
-            
+                chosenWeapon = Console.ReadLine(); //TODO refactor
+
                 switch (chosenWeapon)
                 {
                     case "1":
                         equippedWeapon = "Plasma blade, throbbing with energy";
                         attackRange = "Close";
                         // Lifeform.damage = Generator.Roll(6);
-                        Console.WriteLine(String.Format(" You picked up the {0}. Well done! You can attack at a {1} range. That's useful.", equippedWeapon, attackRange));
+                        Console.WriteLine(String.Format($" You picked up the {equippedWeapon}. Well done! You can attack at a {attackRange} range. That's useful."));
                         choiceMadeInv = true;
                         break;
                     case "2":
@@ -80,17 +80,17 @@ namespace AdventureGame
                         break;
                 }
             }
-            
+
             Console.ReadKey();
             return (equippedWeapon, attackRange); // attackRange;
-                                   // make this return a tuple
+                                                  // make this return a tuple
         }
 
         public static void ResolveRound(Lifeform attacker, Lifeform defender, bool attackerSurprised)
         {
             if (attackerSurprised)
             {
-                Console.WriteLine(" \nThe {0} attacks first.\n", defender.name);
+                Console.WriteLine($" \nThe {defender.name} attacks first.\n");
                 attacker.currHP = defender.ResolveTurnVs(attacker);
                 Console.WriteLine(" \nOOPS\n");
                 Console.ReadKey();
@@ -110,14 +110,14 @@ namespace AdventureGame
                     Console.ReadKey();
                     if (attacker.currHP <= 0)
                     {
-                        Console.WriteLine("\n{0}, you died. Try again or go and do something useful.", attacker.name);
+                        Console.WriteLine($"\n{attacker.name}, you died. Try again or go and do something useful.");
                         Game.EndGame(attacker);
                     }
                 }
                 else
                 {
                     Console.WriteLine(" The {0} died.", defender.name);
-                    
+
                 }
             }
 
@@ -132,7 +132,7 @@ namespace AdventureGame
 
             String choice;
             bool choiceMade = false;
-            
+
             while (!choiceMade)
             {
                 choice = Console.ReadLine();
@@ -156,6 +156,9 @@ namespace AdventureGame
                         choiceMade = true;
                         // Console.ReadKey();
                         break;
+                    case ("k"):
+                        Reset();
+                        break;
                     default:
                         Console.WriteLine(Generator.NegativeAnswer());
                         break;
@@ -163,14 +166,14 @@ namespace AdventureGame
 
                 Console.ReadKey();
             }
-            
+
         }
         // make this to return a list/array of items 
         // take more string args 
         public static void GiveLoot(Item toContainer, string loot)
         {
             toContainer.stuffInside.Add(loot);
-            Console.WriteLine(" \n{0} was added to your backpack.\n", loot);
+            Console.WriteLine($" \n{loot} was added to your backpack.\n");
 
             Console.ReadKey();
         }
@@ -179,38 +182,56 @@ namespace AdventureGame
         {
             if (player.isHidden)
             {
-                Console.WriteLine(" \nThe {0} passes you obliviously. Luck is at your side.\n\nYou leave your hiding place and continue down the corridor.\n", enemy.name);
+                Console.WriteLine($" \nThe {enemy.name} passes you obliviously. Luck is at your side.\n\nYou leave your hiding place and continue down the corridor.\n");
+                player.isHidden = false;
             }
             else
             {
-                Console.WriteLine(" \nYou leave the {0}'s remains behind and continue down the corridor. Prepare for another encounter.\n", enemy.name);
-                player.isHidden = false; 
+                Console.WriteLine($" \nYou leave the {enemy.name}'s remains behind and continue down the corridor. Prepare for another encounter.\n");
             }
-            player.encountersDone += 1; 
+            player.encountersDone += 1;
             Console.ReadKey();
         }
 
-        public static int StartLevel()
+        public static int StartLevel // look at this a bit more
         {
-            string len;
-
-            Console.WriteLine(" \nYou find yourself in a dank corridor.\n -> You can decide how many enemies you encounter. Type a number.");
-            
-            len = (Console.ReadLine());
-            int number;
-            bool success = int.TryParse(len, out number);
-
-            while (!numberSet)
+            get
             {
-                if (success)
+                string len;
+                // bool pickedNumber = false;
+
+                Console.WriteLine(" \nYou find yourself in a dank corridor.\n -> You can decide how many enemies you encounter. Type a number.");
+
+                len = (Console.ReadLine());
+                bool numberSet = int.TryParse(len, out int number);
+
+                if (numberSet)
                 {
                     Console.WriteLine($"You chose {number}. Good.");
+                    // pickedNumber = true;
+                    return number;
                 }
                 else
                 {
-                    Console.WriteLine($"What is taht?!");
+                    number = 3;
+                    Console.WriteLine($"What is taht?!\n $$$ Here, have {number} enemies for starters. $$$");
+                    return number;
                 }
+                
             }
+        }
+        public static void Reset()
+        {
+            Console.WriteLine("                                            O.o   SYSTEM RESET ");
+
+            //Start process
+            System.Diagnostics.Process.Start(System.AppDomain.CurrentDomain.FriendlyName);
+
+            //Close the current process
+            Environment.Exit(0);
+
+            Console.ReadKey();
         }
     }
 }
+                

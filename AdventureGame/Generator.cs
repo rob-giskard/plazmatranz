@@ -45,5 +45,11 @@ namespace AdventureGame
             int pick = Roll(lootables.Length);
             return lootables.GetValue(pick).ToString();
         }
+        public static string PickEnemyWeapon()
+        {
+            String[] arsenal = { "Putrid claws", "Plazma saber", "Rusty kukri", "Psi-link", "Omniknife", "Frigid breath", "Psyshred", "Death touch", "Plazma whip", "Neurorod", "Curse", "Firebolt" };
+            int pick = Roll(arsenal.Length);
+            return arsenal.GetValue(pick).ToString();
+        }
     }
 }
